@@ -32,7 +32,7 @@ const displayPhones = (phones, dataLimit) => {
 
     // display all phones
     phones.forEach( phone => {
-        console.log(phone);
+        // console.log(phone);
         const phoneDiv = document.createElement('div');
         phoneDiv.classList.add('col');
         phoneDiv.innerHTML = `
@@ -42,6 +42,9 @@ const displayPhones = (phones, dataLimit) => {
                 <h5 class="card-title">${phone.phone_name}</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural
                         lead-in to additional content. This content is a little bit longer.</p>
+                <button onclick="loadPhoneDetails('${phone.slug}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loadPhoneDetailModal">
+                Details
+              </button>
             </div>
         </div>
         `;
@@ -61,7 +64,13 @@ const processSearch = (dataLimit) => {
 }
 document.getElementById('btn-search').addEventListener('click', () => {
     processSearch(10);
-})
+});
+
+document.getElementById('search-field').addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        processSearch(10); 
+    }
+});
 
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
@@ -78,4 +87,23 @@ document.getElementById('btn-showAll').addEventListener('click', () => {
     processSearch();
 })
 
-// loadPhones('iphone');
+const loadPhoneDetails = async(id) => {
+    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    displayPhoneDetails(data.data);
+}
+
+const displayPhoneDetails = phone => {
+    console.log(phone);
+    const modalTitle = document.getElementById('loadPhoneDetailModalLabel');
+    modalTitle.innerText = phone.name;
+    const phoneDetailDiv = document.getElementById('phone-details');
+    phoneDetailDiv.innerHTML = `
+    <p> Release Date: ${phone.releaseDate ? phone.releaseDate : 'No Release Date found'}</p>
+    <p>Storage:
+    <p>Others: ${phone.others ? phone.others.Bluetooth : 'No Bluetooth'} </p>
+    `;
+}
+
+loadPhones('iphone');
