@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,26 @@
     <!-- bootstrap CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 </head>
-<body>
-    
 
+<body>
+    <header>
+        <h1 class="text-center my-4">Welcome to my Phone Hunter</h1>
+    </header>
+    <main class="container">
+        <div class="mb-3 w-50 d-flex">
+            <input id="search-field" type="email" class="form-control" id="exampleFormControlInput1" placeholder="Search">
+            <button id="btn-search" class="btn btn-primary">Search</button>
+        </div>
+        <!-- display search result -->
+        <section>
+            <div id="phone-container" class="row row-cols-1 row-cols-md-3 g-4">
+
+            </div>
+        </section>
+    </main>
     <script src="js/app.js"></script>
     <!-- bootstrap JS -->
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
